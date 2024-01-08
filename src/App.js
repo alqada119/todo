@@ -1,24 +1,25 @@
 import logo from './logo.svg';
 import './App.css';
-
+import { Create } from './Create';
+import { useState } from 'react';
 function App() {
+  const [todo,settodo]=useState([])
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+   <>
+   <div className='todo-main-cont'>
+    <div className='todo-label'><h1>ToDo Today</h1></div>
+    {/* will add user */}
+    <div className='todo-body'>
+        {
+          todo.length!=0?<div>{todo.map((todos)=>{
+            <div>{todos}</div>
+          })}</div>:"All done for today! Proud of you :)"
+          
+        }
     </div>
+    <div className='todo-end'><Create></Create></div>
+   </div>
+   </>
   );
 }
 
