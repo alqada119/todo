@@ -5,6 +5,9 @@ const app=express();
 const dotenv=require("dotenv")
 const Notes=require("./models/notes.js")
 const Users=require("./models/users.js")
+const passport=require("passport")
+const session=require("express-session")
+const LocalStrategy = require("passport-local").Strategy;
 dotenv.config();
 console.log(process.env.port,process.env.mongourl);
 const connectToDb=async()=>{
@@ -42,7 +45,8 @@ const deleteNote=async(noteID)=>{
     }
     else{
         try {
-            Notes.deleteOne({_id:noteID})
+            const result=await Notes.deleteOne({_id:noteID})
+            console.log(result)
         } catch (error) {
             console.log(error)
         }
@@ -50,51 +54,94 @@ const deleteNote=async(noteID)=>{
 }
 app.use(cors())
 app.use(express.json())
+app.use(session({ secret: "cats", resave: false, saveUninitialized: true }));
+app.use(passport.initialize());
+app.use(passport.session());
+//Auth
+passport.use(new LocalStrategy(async(email,password,done)=>{
+    try {
+        const user=await Users.findOne({email:email})
+    if(!user){
+        return done(null,false,{message:"Incorrect email"})
+    }
+    if(user.password!==password){
+        return done(null,false,{message:"Incorrect Password"})
+    }
+    return done(null,user)
+    } catch (error) {
+        console.log(error)
+    }
+    
+}))
+passport.serializeUser((user, done) => {
+    done(null, user.id);
+  });
+  
+  passport.deserializeUser(async (id, done) => {
+    try {
+      const user = await User.findById(id);
+      done(null, user);
+    } catch(err) {
+      done(err);
+    };
+  });
+//All above are standard for auth
+app.post("/logIn",
+    passport.authenticate("local", {
+      successRedirect: "/",
+      failureRedirect: "/"
+    })
+  )
+app.post("/signUp",async(req,res)=>{
+    console.log(req.body.email,req.body.password)
+    try {
+    const user = new Users({
+      email: req.body.email,
+      password: req.body.password
+       });
+    const result = await user.save();
+    console.log(req.body.email,req.body.password)
+    res.status(200).send("Sign-up succesful")
+    } catch (error) {
+        res.status(404).send(error)
+    }
+})
+app.post("/logIn")
 //          ---------------------------------------------------ROUTES------------------------------------------------------------------
 app.get("/getAllNotes",async(req,res)=>{
             await connectToDb()
             try {
                 const result=await findAll()
                 console.log(result)
-                res.status(200).send(result)
+                res.status(200).json(result)
             } catch (error) {
                 console.log(error)
                 res.status(400).send("Failed to grab notes")
             }
         })
-app.post("/addNote",(req,res)=>{
-    try {
-        connectToDb
-        .then(()=>{
+app.post("/addNote",async (req,res)=>{
+        await connectToDb()
             try {
-                insertNote(`${req.body}`) //double check this
+                const result = await insertNote(`${req.body.task}`) //double check this
                 res.status(200).send("Note Inserted")
             } catch (error) {
                 res.status(400).send("Failed to insert notes")
             }
-        })
-    } catch (error) {
-        res.status(404).send("Failed")
-    }
-})
-app.get("/get",(req,res)=>{
+        }
+    )
+app.get("/get",(req,res)=>{ //Test
     res.send("Hello")
 })
-app.post("/deleteNote",(req,res)=>{
+app.delete("/deleteNote/:id",async (req,res)=>{
     try {
-        connectToDb
-        .then(()=>{
-            try {
-                insertNote(`${req.body}`) //double check this
-                res.status(200).send("Note Deleted")
-            } catch (error) {
-                res.status(400).send("Failed to delete notes")
-            }
-        })
+        await Notes.deleteOne({_id:req.params.id})  
+        res.status(111).send(`${req.body} has been deleted`)
     } catch (error) {
-        res.status(404).send("Failed")
+        console.log(error)
     }
+    
 })
+app.options("/deleteNote",cors())
 app.listen(process.env.port,()=>{
     console.log("Success connecting Port")
     try {

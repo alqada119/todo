@@ -4,11 +4,11 @@ import 'axios'
 import axios from "axios"
 export const Create=()=>{
     const [task,setTask]=useState("")
-    const addNote=async()=>{
+    const addNote=async(e)=>{
+        e.preventDefault()
         try {
-            axios.post("http://localhost:3100/postNote",{task:task})
-            .then(res=>console.log(res))
-            .catch(err=>console.log(err))
+            const res=await axios.post("http://localhost:3100/addNote",{task})
+            console.log(res)
         } catch (error) {
             console.log(error)
         }
@@ -16,10 +16,10 @@ export const Create=()=>{
     }
     return(
         <div className="todo-container">
-            <form>
+            <form onSubmit={addNote}>
             <div className="todo-container-form">
-            <button className="todo-button" onClick={addNote}>Add Note</button>
-            <input type="text" name="note" id="note" className="todo-input" onChange={(e)=>setTask(e.target.value)}></input>
+            <button type="submit" className="todo-button">Add Note</button>
+            <input type="text" name="note" id="note" className="todo-input" onChange={(e)=>{setTask(e.target.value)}}></input>
                 </div>
             </form>
         </div>
