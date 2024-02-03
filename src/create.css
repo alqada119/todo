@@ -1,5 +1,4 @@
 .todo-container{
-    background-color: grey;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -7,8 +6,7 @@
 .todo-button{
     font: bold;
     font-size: 20px;
-    background-color: black;
-    color: wheat;
+    color: rgb(13, 13, 13);
 }
 .todo-input{
     height: 30px;

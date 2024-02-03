@@ -9,36 +9,46 @@ export default function App() {
   const [todo,settodo]=useState([]);
   const [cookies,removeCookies]=useCookies([]);
   const [user,setUser]=useState("");
+  const updateNote=async(id)=>{
+    console.log(id)
+    try {
+      // const text=prompt("Enter updated text")
+      const text="Testing right now"
+      const res=await axios.put(`http://localhost:3100/updateNote/${id}`,{text:text},{withCredentials:true})
+      console.log(res)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  const logOut=async()=>{
+    try {
+      const req=await axios.get("http://localhost:3100/users/logout",{withCredentials:true})
+      console.log(req)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  const checkLogIn=async()=>{
+    try {
+      const log=await axios.get("http://localhost:3100/users/isLoggedIn",{withCredentials:true})
+      console.log(log)
+    } catch (error) {
+      console.log(error)
+    }
+    
+  }
   const getAllNotes=async()=>{
     try {
-      const res=await axios.get("http://localhost:3100/getAllNotes");
+      const res=await axios.get("http://localhost:3100/getAllNotes",{withCredentials:true});
       settodo(res.data)
     } catch (error) {
       console.log(error)
     }
     
   }
-  // const verifyCookie=async()=>{
-  //   console.log(cookies)
-  //   if(!cookies.token){
-  //     navigate("")
-  //   }
-  //   const {data}=await axios.post("http://localhost:3100",{},{withCredentials:true});
-  //   console.log(data)
-  //   const{status,user}=data
-  //   setUser(user)
-  //   if(!status){
-  //     removeCookies("token");
-  //     navigate("/logIn")
-  //   }
-  // }
-  const LogOut=()=>{
-    removeCookies("token");
-    navigate("/")
-  }
   const deleteNote=async(id)=>{
     try {
-      const res=await axios.delete(`http://localhost:3100/deleteNote/${id}`,{params:{id:id}})
+      const res=await axios.delete(`http://localhost:3100/deleteNote/${id}`,{withCredentials:true})
       console.log(res)
     } catch (error) {
       console.log(error)
@@ -46,6 +56,8 @@ export default function App() {
   }
   useEffect(()=>{
     getAllNotes()
+    checkLogIn()
+    console.log(document.cookie)
     // verifyCookie()
   },[])
   return (
@@ -59,18 +71,21 @@ export default function App() {
       <div>
         {
           todo.map((e) => (
-            <p key={e._id}>{e.text} <button onClick={()=>{deleteNote(e._id)}}>Delete Note</button></p>
+            <p key={e._id}>{e.text} <button onClick={()=>{deleteNote(e._id)}}>Delete Note</button><button onClick={()=>updateNote(e._id)}>Update Note</button></p>
           ))
         }
       </div>
     ) : "All done for today! Proud of you :)"
   }
 </div>
-
-    <div className='todo-end'><Create></Create>
-    <button><Link to={"/signUp"}>SignUp</Link></button></div>
-    <button><Link to={"/logIn"}>Login</Link></button>
-
+    <div>
+    <Create></Create>
+    </div>
+    <div className='todo-end'>
+    <button className='todo-endd signUp'><Link to={"/signUp"}>SignUp</Link></button>
+    <button className='todo-endd log'><Link to={"/logIn"}>Login</Link></button>
+    <button className='todo-endd logOut'onClick={logOut}>LogOut</button>
+    </div>
    </div>
    </>
   );

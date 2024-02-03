@@ -21,3 +21,25 @@
   /* border: 3px solid; */
   width: 400px;
 }
+*{
+  text-decoration: none;
+}
+.todo-end{
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap:10px;
+}
+.todo-endd{
+  font-weight: bold;
+}
+.todo-endd.signUp>a{
+  color: rgb(0, 88, 88);
+}
+.todo-endd.log>a{
+  color: rgb(31, 178, 63);
+}
+.todo-endd.logOut{
+  color: rgb(249, 33, 0);
+}
