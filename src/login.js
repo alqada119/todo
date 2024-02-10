@@ -2,6 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
+import "./login.css"
 export const Login=()=>{
     const navigate=useNavigate();
     const [email,setEmail]=useState("")
@@ -16,19 +17,20 @@ export const Login=()=>{
             if(result.status==200){
                 setTimeout(()=>{
                     // navigate("/")
-                    console.log("Success",document.cookie)
+                    console.log("Success",)
+                    navigate("/")
                 },1000)
             }
         } catch (error) {
             console.log(error)
         }
     }
-    return (<div>
-        <form onSubmit={login}>
-            <h1>LogIn</h1>
-            <input type="text" name="email" onChange={(e)=>setEmail(e.target.value)}></input>
-            <input type="password" name="password" onChange={(e)=>setPassword(e.target.value)}></input>
-            <button type="submit">Log-In</button>
+    return (<div className="body login">
+        <form className="form login" onSubmit={login}>
+            <h1 className="h1 login">LogIn</h1>
+            <input type="text" name="email" className="input login" onChange={(e)=>setEmail(e.target.value)}></input>
+            <input type="password" name="password" className="input login" onChange={(e)=>setPassword(e.target.value)}></input>
+            <button className="button login" type="submit">Log-In</button>
         </form>
     </div>)
 }

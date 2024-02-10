@@ -18,7 +18,7 @@ export const SignUp=()=>{
         try {
             const result=await axios.post("http://localhost:3100/users/signUp",{email:email,password:password})
             console.log(result)
-            if (result.status==201){
+            if (result.status==200){
                 handleSuccess("Signed Up Succesfuly")
                 setTimeout(()=>{
                     navigate("/")
@@ -31,12 +31,12 @@ export const SignUp=()=>{
             console.log("error")
         }
     }
-    return (<div>
-        <form onSubmit={signUp}>
-            <h1>Sign-Up</h1>
-            <input type="text" name="email" onChange={(e)=>setEmail(e.target.value)}></input>
-            <input type="password" name="password" onChange={(e)=>setPassword(e.target.value)}></input>
-            <button type="submit">Sign-Up</button>
+    return (<div className="body signUp">
+        <form className="form signUp"onSubmit={signUp}>
+            <h1 className="h1 signUp">Sign-Up</h1>
+            <input type="text" name="email" className="input signUp" onChange={(e)=>setEmail(e.target.value)}></input>
+            <input type="password" name="password" className="input signUp" onChange={(e)=>setPassword(e.target.value)}></input>
+            <button type="submit" className="button signUp">Sign-Up</button>
         </form>
         <ToastContainer />
     </div>)

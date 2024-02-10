@@ -1,45 +1,66 @@
-.todo-main-cont{
+.todo-main-cont {
   height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  /* border: 3px solid; */
 }
-.todo-label{
+
+.todo-label {
   height: 60px;
   display: flex;
   justify-content: center;
   align-items: center;
-  /* border: 3px solid; */
+  font-size: 24px;
+  color: #333;
+  font-family: 'Arial', sans-serif;
 }
-.todo-body{
+
+.todo-body {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 200px;
-  /* border: 3px solid; */
-  width: 400px;
+  max-width: 400px;
+  width: 100%;
+  margin: 20px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  font-family: 'Arial', sans-serif;
 }
-*{
+
+* {
   text-decoration: none;
 }
-.todo-end{
+
+.todo-end {
   margin-top: 20px;
   display: flex;
   justify-content: center;
   align-items: center;
-  gap:10px;
+  gap: 10px;
 }
-.todo-endd{
+
+.todo-endd {
   font-weight: bold;
 }
-.todo-endd.signUp>a{
+
+.todo-endd a {
+  color: #333;
+  font-family: 'Arial', sans-serif;
+}
+
+.todo-endd.signUp a {
   color: rgb(0, 88, 88);
 }
-.todo-endd.log>a{
+
+.todo-endd.log a {
   color: rgb(31, 178, 63);
 }
-.todo-endd.logOut{
+
+.todo-endd.logOut {
   color: rgb(249, 33, 0);
 }

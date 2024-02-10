@@ -10,17 +10,14 @@ exports.login=asyncHandler(async(req,res,next)=>{
     console.log("Testing")
     try {
         const user=await Users.findOne({email:email})
-        console.log(user)
         if(!user){
             return res.status(401).send({message:"Incorrect fields"})
         }
         const auth=await bcrypt.compare(password,user.password)
-        console.log(auth)
         if(!auth){
             return res.status(401).json({message:"Wrong Password"})
         }
         const token = createSecretToken(user._id);
-        console.log("Here is",token)
         return res.cookie("token", token, {
         withCredentials: true,
         httpOnly: false,path:"/"}).status(200).json({message:"Login Success with cookie"});
@@ -39,7 +36,6 @@ exports.logout=asyncHandler(async(req,res,next)=>{
 })
 exports.isLoggedIn=asyncHandler(async(req,res,next)=>{
     const token=req.cookies.token
-    console.log(req)
     if(!token){
         return res.json(false)
     }
@@ -54,9 +50,7 @@ exports.isLoggedIn=asyncHandler(async(req,res,next)=>{
 exports.signUp=asyncHandler(async(req,res,next)=>{
     try {
         const {email,password}=req.body
-        console.log(email,password)
         const existingUser=await Users.find({email:email})
-        console.log(existingUser)
         if (existingUser.length>0){
             console.log("User Found")
             return res.json({message:"User Already Exists"})
@@ -64,7 +58,6 @@ exports.signUp=asyncHandler(async(req,res,next)=>{
         else{
             console.log("User not found")
             const user = await Users.create({email:email,password:password})
-            console.log(user)
             const token=createSecretToken(user._id)
             res.cookie("token",token,{
             withCredentials:true,

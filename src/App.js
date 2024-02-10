@@ -9,12 +9,14 @@ export default function App() {
   const [todo,settodo]=useState([]);
   const [cookies,removeCookies]=useCookies([]);
   const [user,setUser]=useState("");
+  const [render,rerender]=useState(false);
   const updateNote=async(id)=>{
     console.log(id)
     try {
       // const text=prompt("Enter updated text")
       const text="Testing right now"
       const res=await axios.put(`http://localhost:3100/updateNote/${id}`,{text:text},{withCredentials:true})
+      rerender(true);
       console.log(res)
     } catch (error) {
       console.log(error)
@@ -24,6 +26,9 @@ export default function App() {
     try {
       const req=await axios.get("http://localhost:3100/users/logout",{withCredentials:true})
       console.log(req)
+      setTimeout(()=>{
+        window.location.reload()
+      },1000)
     } catch (error) {
       console.log(error)
     }
@@ -49,8 +54,10 @@ export default function App() {
   const deleteNote=async(id)=>{
     try {
       const res=await axios.delete(`http://localhost:3100/deleteNote/${id}`,{withCredentials:true})
+      rerender(true);
       console.log(res)
     } catch (error) {
+      window.location.reload()
       console.log(error)
     }
   }
@@ -59,7 +66,10 @@ export default function App() {
     checkLogIn()
     console.log(document.cookie)
     // verifyCookie()
-  },[])
+  },[]);
+  useEffect(()=>{
+    getAllNotes()
+  },[render]);
   return (
    <>
    <div className='todo-main-cont'>
@@ -71,7 +81,7 @@ export default function App() {
       <div>
         {
           todo.map((e) => (
-            <p key={e._id}>{e.text} <button onClick={()=>{deleteNote(e._id)}}>Delete Note</button><button onClick={()=>updateNote(e._id)}>Update Note</button></p>
+            <p key={e._id}>{e.text} <button onClick={()=>{deleteNote(e._id)}}>Delete Note</button></p>
           ))
         }
       </div>

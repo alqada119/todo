@@ -7,7 +7,6 @@ const cookieParser = require("cookie-parser");
 const UserRouter = require("./routes/userRoutes.js");
 const NoteRouter=require("./routes/noteRoutes.js")
 dotenv.config();
-console.log(process.env.port,process.env.mongourl,process.env.TOKEN_KEY);
 app.use(express.json());
 app.use(cookieParser());
 // app.use(cors());

@@ -34,7 +34,6 @@ exports.addNote=asyncHandler(async(req,res,next)=>{
     await connectToDb()
             try {
                 const isLoggedIn=req.user.id
-                console.log("IsLogged",isLoggedIn)
                 if(!isLoggedIn){
                     return res.status(301).json({message:"Not Logged In"})
                 }
