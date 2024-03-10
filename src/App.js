@@ -35,7 +35,7 @@ export default function App() {
   }
   const checkLogIn=async()=>{
     try {
-      const log=await axios.get("http://localhost:3100/api/users/isLoggedIn",{withCredentials:true})
+      const log=await axios.get("http://http://ec2-18-221-128-94.us-east-2.compute.amazonaws.com/api/users/isLoggedIn",{withCredentials:true})
       console.log(log)
     } catch (error) {
       console.log(error)
