@@ -16,7 +16,7 @@ export const SignUp=()=>{
         e.preventDefault();
         // console.log(email,password)
         try {
-            const result=await axios.post("http://localhost:3100/users/signUp",{email:email,password:password})
+            const result=await axios.post("http://localhost:3100/api/users/signUp",{email:email,password:password})
             console.log(result)
             if (result.status==200){
                 handleSuccess("Signed Up Succesfuly")

@@ -13,7 +13,7 @@ export const Login=()=>{
         e.preventDefault();
         // console.log(email,password)
         try {
-            const result = await axios.post("http://localhost:3100/users/logIn", { email: email, password: password },{withCredentials:true});
+            const result = await axios.post("http://localhost:3100/api/users/logIn", { email: email, password: password },{withCredentials:true});
             if(result.status==200){
                 setTimeout(()=>{
                     // navigate("/")

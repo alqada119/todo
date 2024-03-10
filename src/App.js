@@ -15,7 +15,7 @@ export default function App() {
     try {
       // const text=prompt("Enter updated text")
       const text="Testing right now"
-      const res=await axios.put(`http://localhost:3100/updateNote/${id}`,{text:text},{withCredentials:true})
+      const res=await axios.put(`http://localhost:3100/api/updateNote/${id}`,{text:text},{withCredentials:true})
       rerender(true);
       console.log(res)
     } catch (error) {
@@ -24,7 +24,7 @@ export default function App() {
   }
   const logOut=async()=>{
     try {
-      const req=await axios.get("http://localhost:3100/users/logout",{withCredentials:true})
+      const req=await axios.get("http://localhost:3100/api/users/logout",{withCredentials:true})
       console.log(req)
       setTimeout(()=>{
         window.location.reload()
@@ -35,7 +35,7 @@ export default function App() {
   }
   const checkLogIn=async()=>{
     try {
-      const log=await axios.get("http://localhost:3100/users/isLoggedIn",{withCredentials:true})
+      const log=await axios.get("http://localhost:3100/api/users/isLoggedIn",{withCredentials:true})
       console.log(log)
     } catch (error) {
       console.log(error)
@@ -44,7 +44,7 @@ export default function App() {
   }
   const getAllNotes=async()=>{
     try {
-      const res=await axios.get("http://localhost:3100/getAllNotes",{withCredentials:true});
+      const res=await axios.get("http://localhost:3100/api/getAllNotes",{withCredentials:true});
       settodo(res.data)
     } catch (error) {
       console.log(error)
@@ -53,7 +53,7 @@ export default function App() {
   }
   const deleteNote=async(id)=>{
     try {
-      const res=await axios.delete(`http://localhost:3100/deleteNote/${id}`,{withCredentials:true})
+      const res=await axios.delete(`http://localhost:3100/api/deleteNote/${id}`,{withCredentials:true})
       rerender(true);
       console.log(res)
     } catch (error) {
