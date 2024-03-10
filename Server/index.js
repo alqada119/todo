@@ -20,6 +20,9 @@ const connectToDb=async()=>{
     }
 }
 app.use(cors({credentials:true,origin:"http://localhost:3000"})) //Very Very Important to set cookies also must include with credentials in frontEnd
+app.get("/",(req,res)=>{
+    res.send("Welcome to backend")
+})
 app.use("/api/users",UserRouter);
 app.use("/api",NoteRouter)
 app.listen(process.env.port,()=>{
