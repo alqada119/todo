@@ -35,7 +35,7 @@ export default function App() {
   }
   const checkLogIn=async()=>{
     try {
-      const log=await axios.get("http://http://ec2-18-221-128-94.us-east-2.compute.amazonaws.com/api/users/isLoggedIn",{withCredentials:true})
+      const log=await axios.get("http://localhost:3100/api/users/isLoggedIn",{withCredentials:true})
       console.log(log)
     } catch (error) {
       console.log(error)
@@ -61,9 +61,14 @@ export default function App() {
       console.log(error)
     }
   }
+  const test=async()=>{
+    const result=await axios.get("http://ec2-18-221-128-94.us-east-2.compute.amazonaws.com/")
+    console.log(result)
+  }
   useEffect(()=>{
     getAllNotes()
     checkLogIn()
+    test()
     console.log(document.cookie)
     // verifyCookie()
   },[]);
@@ -95,6 +100,7 @@ export default function App() {
     <button className='todo-endd signUp'><Link to={"/signUp"}>SignUp</Link></button>
     <button className='todo-endd log'><Link to={"/logIn"}>Login</Link></button>
     <button className='todo-endd logOut'onClick={logOut}>LogOut</button>
+    <button onClick={test}>Test</button>
     </div>
    </div>
    </>
