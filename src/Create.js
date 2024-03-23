@@ -7,7 +7,7 @@ export const Create=()=>{
     const addNote=async(e)=>{
         e.preventDefault()
         try {
-            const res=await axios.post("http://localhost:3100/addNote",{task},{withCredentials:true});
+            const res=await axios.post("http://ec2-18-221-128-94.us-east-2.compute.amazonaws.com/api/addNote",{task},{withCredentials:true});
             window.location.reload();
             console.log(res)
         } catch (error) {
