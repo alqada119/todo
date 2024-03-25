@@ -13,7 +13,7 @@ export const Login=()=>{
         e.preventDefault();
         // console.log(email,password)
         try {
-            const result = await axios.post("http://ec2-18-221-128-94.us-east-2.compute.amazonaws.com/api/users/logIn", { email: email, password: password },{withCredentials:true});
+            const result = await axios.post("http://ec2-18-221-128-94.us-east-2.compute.amazonaws.com/backend/api/users/logIn", { email: email, password: password },{withCredentials:true});
             if(result.status==200){
                 setTimeout(()=>{
                     // navigate("/")
